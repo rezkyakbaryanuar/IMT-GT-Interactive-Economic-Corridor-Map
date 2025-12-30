@@ -1,0 +1,317 @@
+// =========================================================
+// IMT-GT DATA REPOSITORY (FULL LOGISTICS & TOURISM)
+// =========================================================
+
+// --- 1. GEOJSON CORRIDOR LINES (MERGED) ---
+if (typeof ec1_features === 'undefined') console.error("CRITICAL: ec1.js belum dimuat!");
+if (typeof ec2_features === 'undefined') console.error("CRITICAL: ec2.js belum dimuat!");
+if (typeof ec3_features === 'undefined') console.error("CRITICAL: ec3.js belum dimuat!");
+
+function normalizeFeatures(features, id, name, color) {
+    if (!Array.isArray(features)) return [];
+    return features.map(f => {
+        f.properties = f.properties || {};
+        f.id = id;
+        f.properties.id = id;
+        f.properties.name = name;
+        f.properties.color = color;
+        f.properties.stroke = color;
+        return f;
+    });
+}
+
+const imt_gt_data = {
+  "type": "FeatureCollection",
+  "features": [
+      ...normalizeFeatures(ec1_features, 0, "EC1: Songkhla-Penang-Medan", "#e9dd15"),
+      ...normalizeFeatures(ec2_features, 1, "EC2: Straits of Malacca", "#00a54f"),
+      ...normalizeFeatures(ec3_features, 2, "EC3: Sumatra Corridor", "#ef59a1")
+  ]
+};
+
+// --- 2. REGIONAL HUBS (States & Provinces) ---
+const cities = [
+    // === EC 1 HUBS ===
+    { id: 101, name: "North Sumatra (ID)", coords: [3.5952, 98.6722], ec_id: 0 },
+    { id: 102, name: "Penang (MY)", coords: [5.4141, 100.3288], ec_id: 0 },
+    { id: 103, name: "Kedah (MY)", coords: [6.1184, 100.3685], ec_id: 0 },
+    { id: 104, name: "Perlis (MY)", coords: [6.4414, 100.1986], ec_id: 0 },
+    { id: 105, name: "Songkhla (TH)", coords: [7.1988, 100.5951], ec_id: 0 },
+    { id: 106, name: "Nakhon Si Thammarat (TH)", coords: [8.4304, 99.9631], ec_id: 0 },
+    { id: 107, name: "Chumphon (TH)", coords: [10.4930, 99.1800], ec_id: 0 },
+    { id: 108, name: "Surat Thani (TH)", coords: [9.1389, 99.3126], ec_id: 0 },
+    { id: 109, name: "Phatthalung (TH)", coords: [7.6167, 100.0740], ec_id: 0 },
+
+    // === EC 2 HUBS ===
+    { id: 201, name: "Perak (MY)", coords: [4.5921, 101.0901], ec_id: 1 },
+    { id: 202, name: "Selangor (MY)", coords: [3.0738, 101.5183], ec_id: 1 },
+    { id: 203, name: "Malacca (MY)", coords: [2.1896, 102.2501], ec_id: 1 },
+    { id: 204, name: "Krabi (TH)", coords: [8.0863, 98.9063], ec_id: 1 },
+    { id: 205, name: "Phang Nga (TH)", coords: [8.4501, 98.5255], ec_id: 1 },
+    { id: 206, name: "Trang (TH)", coords: [7.5645, 99.6084], ec_id: 1 },
+    { id: 207, name: "Yala (TH)", coords: [6.5400, 101.2800], ec_id: 1 },
+    { id: 208, name: "Satun (TH)", coords: [6.6238, 100.0674], ec_id: 1 },
+
+    // === EC 3 HUBS ===
+    { id: 301, name: "Aceh (ID)", coords: [5.5483, 95.3238], ec_id: 2 },
+    { id: 302, name: "North Sumatra (ID)", coords: [3.5952, 98.6722], ec_id: 2 },
+    { id: 303, name: "Riau (ID)", coords: [0.5071, 101.4478], ec_id: 2 },
+    { id: 304, name: "West Sumatra (ID)", coords: [-0.9492, 100.4172], ec_id: 2 },
+    { id: 305, name: "Jambi (ID)", coords: [-1.6099, 103.6131], ec_id: 2 },
+    { id: 306, name: "South Sumatra (ID)", coords: [-2.9761, 104.7754], ec_id: 2 },
+    { id: 307, name: "Bengkulu (ID)", coords: [-3.8004, 102.2655], ec_id: 2 },
+    { id: 308, name: "Lampung (ID)", coords: [-5.3971, 105.2668], ec_id: 2 }
+];
+
+// --- 3. LANDMARKS (FULL: TOURISM + AIRPORT + PORT + TRAIN + BUS) ---
+const landmarks = [
+    // =========================== EC 1 ===========================
+
+    // --- 1. North Sumatra ---
+    // Tourism
+    { name: "Lake Toba", coords: [2.6147, 98.8302], type: "tourism", city_id: 101, link: "http://google.com/maps/search/Lake+Toba" },
+    { name: "Samosir Island", coords: [2.6378, 98.7056], type: "tourism", city_id: 101, link: "http://google.com/maps/search/Samosir" },
+    { name: "Sipiso-Piso Waterfall", coords: [2.9178, 98.5233], type: "tourism", city_id: 101, link: "http://google.com/maps/search/Sipiso-Piso" },
+    { name: "Maimun Palace", coords: [3.5752, 98.6838], type: "tourism", city_id: 101, link: "http://google.com/maps/search/Maimun+Palace" },
+    // Logistics
+    { name: "Kualanamu Int. Airport (KNO)", coords: [3.6422, 98.8852], type: "transport", city_id: 101, link: "http://google.com/maps/search/KNO+Airport" },
+    { name: "Port of Belawan", coords: [3.7858, 98.6857], type: "port", city_id: 101, link: "http://google.com/maps/search/Port+of+Belawan" },
+    { name: "Medan Train Station", coords: [3.5931, 98.6806], type: "transport", city_id: 101, link: "http://google.com/maps/search/Medan+Railway+Station" },
+    { name: "Amplas Bus Terminal", coords: [3.5387, 98.7185], type: "transport", city_id: 101, link: "http://google.com/maps/search/Terminal+Amplas" },
+
+    // --- 2. Penang ---
+    // Tourism
+    { name: "George Town Heritage", coords: [5.4164, 100.3364], type: "tourism", city_id: 102, link: "http://google.com/maps/search/George+Town" },
+    { name: "Penang Hill", coords: [5.4085, 100.2773], type: "tourism", city_id: 102, link: "http://google.com/maps/search/Penang+Hill" },
+    { name: "Kek Lok Si Temple", coords: [5.3996, 100.2737], type: "tourism", city_id: 102, link: "http://google.com/maps/search/Kek+Lok+Si" },
+    // Logistics
+    { name: "Penang Int. Airport (PEN)", coords: [5.2924, 100.2655], type: "transport", city_id: 102, link: "http://google.com/maps/search/Penang+Airport" },
+    { name: "Swettenham Pier Cruise Terminal", coords: [5.4190, 100.3440], type: "port", city_id: 102, link: "http://google.com/maps/search/Swettenham+Pier" },
+    { name: "Butterworth Railway Station", coords: [5.3934, 100.3683], type: "transport", city_id: 102, link: "http://google.com/maps/search/Butterworth+Station" },
+    { name: "Sungai Nibong Bus Terminal", coords: [5.3422, 100.2995], type: "transport", city_id: 102, link: "http://google.com/maps/search/Sungai+Nibong+Bus" },
+
+    // --- 3. Kedah ---
+    // Tourism
+    { name: "Langkawi SkyBridge", coords: [6.3863, 99.6617], type: "tourism", city_id: 103, link: "http://google.com/maps/search/Langkawi+SkyBridge" },
+    { name: "Pantai Cenang", coords: [6.2917, 99.7288], type: "tourism", city_id: 103, link: "http://google.com/maps/search/Pantai+Cenang" },
+    { name: "Masjid Zahir", coords: [6.1190, 100.3650], type: "tourism", city_id: 103, link: "http://google.com/maps/search/Masjid+Zahir" },
+    // Logistics
+    { name: "Alor Setar Airport (AOR)", coords: [6.1947, 100.3986], type: "transport", city_id: 103, link: "http://google.com/maps/search/Alor+Setar+Airport" },
+    { name: "Kuala Kedah Ferry Terminal", coords: [6.1095, 100.2863], type: "port", city_id: 103, link: "http://google.com/maps/search/Kuala+Kedah+Ferry" },
+    { name: "Alor Setar Railway Station", coords: [6.1158, 100.3664], type: "transport", city_id: 103, link: "http://google.com/maps/search/Alor+Setar+Railway" },
+    { name: "Shahab Perdana Bus Terminal", coords: [6.1360, 100.3640], type: "transport", city_id: 103, link: "http://google.com/maps/search/Shahab+Perdana" },
+
+    // --- 4. Perlis ---
+    // Tourism
+    { name: "Gua Kelam", coords: [6.6433, 100.2033], type: "tourism", city_id: 104, link: "http://google.com/maps/search/Gua+Kelam" },
+    { name: "Wang Kelian Viewpoint", coords: [6.6778, 100.1836], type: "tourism", city_id: 104, link: "http://google.com/maps/search/Wang+Kelian" },
+    // Logistics
+    { name: "Alor Setar Airport (Nearest)", coords: [6.1947, 100.3986], type: "transport", city_id: 104, link: "http://google.com/maps/search/Alor+Setar+Airport" }, // No Airport in Perlis
+    { name: "Kuala Perlis Ferry Terminal", coords: [6.4000, 100.1333], type: "port", city_id: 104, link: "http://google.com/maps/search/Kuala+Perlis+Ferry" },
+    { name: "Arau Railway Station", coords: [6.4328, 100.2747], type: "transport", city_id: 104, link: "http://google.com/maps/search/Arau+Railway" },
+    { name: "Kangar Bus Terminal", coords: [6.4385, 100.1932], type: "transport", city_id: 104, link: "http://google.com/maps/search/Kangar+Bus+Terminal" },
+
+    // --- 5. Songkhla ---
+    // Tourism
+    { name: "Samila Beach", coords: [7.2154, 100.5947], type: "tourism", city_id: 105, link: "http://google.com/maps/search/Samila+Beach" },
+    { name: "Songkhla Old Town", coords: [7.1970, 100.5910], type: "tourism", city_id: 105, link: "http://google.com/maps/search/Songkhla+Old+Town" },
+    // Logistics
+    { name: "Hat Yai Int. Airport (HDY)", coords: [6.9333, 100.3933], type: "transport", city_id: 105, link: "http://google.com/maps/search/Hat+Yai+Airport" },
+    { name: "Songkhla Deep Sea Port", coords: [7.2185, 100.5786], type: "port", city_id: 105, link: "http://google.com/maps/search/Songkhla+Port" },
+    { name: "Hat Yai Junction Railway", coords: [7.0033, 100.4682], type: "transport", city_id: 105, link: "http://google.com/maps/search/Hat+Yai+Junction" },
+    { name: "Hat Yai Bus Terminal 1", coords: [6.9933, 100.4852], type: "transport", city_id: 105, link: "http://google.com/maps/search/Hat+Yai+Bus+Terminal" },
+
+    // --- 6. Nakhon Si Thammarat ---
+    // Tourism
+    { name: "Wat Phra Mahathat", coords: [8.4111, 99.9664], type: "tourism", city_id: 106, link: "http://google.com/maps/search/Wat+Phra+Mahathat" },
+    { name: "Khanom Beach", coords: [9.1822, 99.8442], type: "tourism", city_id: 106, link: "http://google.com/maps/search/Khanom+Beach" },
+    // Logistics
+    { name: "Nakhon Si Thammarat Airport (NST)", coords: [8.5401, 99.9439], type: "transport", city_id: 106, link: "http://google.com/maps/search/NST+Airport" },
+    { name: "Khanom Port", coords: [9.2084, 99.8622], type: "port", city_id: 106, link: "http://google.com/maps/search/Khanom+Port" },
+    { name: "Nakhon Si Thammarat Station", coords: [8.4326, 99.9575], type: "transport", city_id: 106, link: "http://google.com/maps/search/NST+Station" },
+    { name: "Borokoso Bus Terminal", coords: [8.4230, 99.9400], type: "transport", city_id: 106, link: "http://google.com/maps/search/Borokoso+Bus" },
+
+    // --- 7. Chumphon ---
+    // Tourism
+    { name: "Thung Wua Laen Beach", coords: [10.5626, 99.2739], type: "tourism", city_id: 107, link: "http://google.com/maps/search/Thung+Wua+Laen" },
+    { name: "Mu Ko Chumphon NP", coords: [10.3794, 99.2394], type: "tourism", city_id: 107, link: "http://google.com/maps/search/Mu+Ko+Chumphon" },
+    // Logistics
+    { name: "Chumphon Airport (CJM)", coords: [10.7093, 99.3621], type: "transport", city_id: 107, link: "http://google.com/maps/search/Chumphon+Airport" },
+    { name: "Mattaphon Pier", coords: [10.4390, 99.2450], type: "port", city_id: 107, link: "http://google.com/maps/search/Mattaphon+Pier" },
+    { name: "Chumphon Train Station", coords: [10.5015, 99.1764], type: "transport", city_id: 107, link: "http://google.com/maps/search/Chumphon+Station" },
+    { name: "Chumphon Bus Terminal", coords: [10.4680, 99.1415], type: "transport", city_id: 107, link: "http://google.com/maps/search/Chumphon+Bus" },
+
+    // --- 8. Surat Thani ---
+    // Tourism
+    { name: "Koh Samui", coords: [9.5120, 100.0136], type: "tourism", city_id: 108, link: "http://google.com/maps/search/Koh+Samui" },
+    { name: "Khao Sok National Park", coords: [8.9136, 98.5301], type: "tourism", city_id: 108, link: "http://google.com/maps/search/Khao+Sok" },
+    // Logistics
+    { name: "Surat Thani Airport (URT)", coords: [9.1325, 99.1356], type: "transport", city_id: 108, link: "http://google.com/maps/search/Surat+Thani+Airport" },
+    { name: "Donsak Pier", coords: [9.3142, 99.6974], type: "port", city_id: 108, link: "http://google.com/maps/search/Donsak+Pier" },
+    { name: "Phunphin (Surat Thani) Station", coords: [9.1052, 99.2312], type: "transport", city_id: 108, link: "http://google.com/maps/search/Phunphin+Station" },
+    { name: "Surat Thani Bus Terminal", coords: [9.1170, 99.2990], type: "transport", city_id: 108, link: "http://google.com/maps/search/Surat+Thani+Bus" },
+
+    // --- 9. Phatthalung ---
+    // Tourism
+    { name: "Thale Noi Waterfowl", coords: [7.7801, 100.1205], type: "tourism", city_id: 109, link: "http://google.com/maps/search/Thale+Noi" },
+    { name: "Khao Ok Thalu", coords: [7.6253, 100.0931], type: "tourism", city_id: 109, link: "http://google.com/maps/search/Khao+Ok+Thalu" },
+    // Logistics
+    { name: "Trang Airport (Nearest)", coords: [7.5096, 99.6151], type: "transport", city_id: 109, link: "http://google.com/maps/search/Trang+Airport" }, // No Airport
+    { name: "Phatthalung Train Station", coords: [7.6158, 100.0768], type: "transport", city_id: 109, link: "http://google.com/maps/search/Phatthalung+Station" },
+    { name: "Phatthalung Bus Terminal", coords: [7.6105, 100.0521], type: "transport", city_id: 109, link: "http://google.com/maps/search/Phatthalung+Bus" },
+    { name: "Pak Payun Pier", coords: [7.3486, 100.3169], type: "port", city_id: 109, link: "http://google.com/maps/search/Pak+Payun+Pier" },
+
+    // =========================== EC 2 ===========================
+
+    // --- 1. Perak ---
+    // Tourism
+    { name: "Kellie's Castle", coords: [4.4745, 101.0877], type: "tourism", city_id: 201, link: "http://google.com/maps/search/Kellies+Castle" },
+    { name: "Ipoh Old Town", coords: [4.5975, 101.0779], type: "tourism", city_id: 201, link: "http://google.com/maps/search/Ipoh+Old+Town" },
+    // Logistics
+    { name: "Sultan Azlan Shah Airport (IPH)", coords: [4.5678, 101.0917], type: "transport", city_id: 201, link: "http://google.com/maps/search/IPH+Airport" },
+    { name: "Lumut Port", coords: [4.2467, 100.6272], type: "port", city_id: 201, link: "http://google.com/maps/search/Lumut+Port" },
+    { name: "Ipoh Railway Station", coords: [4.5969, 101.0717], type: "transport", city_id: 201, link: "http://google.com/maps/search/Ipoh+Station" },
+    { name: "Amanjaya Bus Terminal", coords: [4.6644, 101.0784], type: "transport", city_id: 201, link: "http://google.com/maps/search/Amanjaya+Bus" },
+
+    // --- 2. Selangor ---
+    // Tourism
+    { name: "Batu Caves", coords: [3.2379, 101.6841], type: "tourism", city_id: 202, link: "http://google.com/maps/search/Batu+Caves" },
+    { name: "Sunway Lagoon", coords: [3.0714, 101.6053], type: "tourism", city_id: 202, link: "http://google.com/maps/search/Sunway+Lagoon" },
+    // Logistics
+    { name: "Kuala Lumpur Int. Airport (KLIA)", coords: [2.7456, 101.7072], type: "transport", city_id: 202, link: "http://google.com/maps/search/KLIA" },
+    { name: "Port Klang", coords: [3.0000, 101.4000], type: "port", city_id: 202, link: "http://google.com/maps/search/Port+Klang" },
+    { name: "KL Sentral Station", coords: [3.1342, 101.6865], type: "transport", city_id: 202, link: "http://google.com/maps/search/KL+Sentral" },
+    { name: "TBS Bus Terminal", coords: [3.0763, 101.7118], type: "transport", city_id: 202, link: "http://google.com/maps/search/TBS" },
+
+    // --- 3. Malacca ---
+    // Tourism
+    { name: "A Famosa & Stadthuys", coords: [2.1923, 102.2492], type: "tourism", city_id: 203, link: "http://google.com/maps/search/A+Famosa" },
+    { name: "Jonker Street", coords: [2.1963, 102.2466], type: "tourism", city_id: 203, link: "http://google.com/maps/search/Jonker+Street" },
+    // Logistics
+    { name: "Malacca Int. Airport (MKZ)", coords: [2.2634, 102.2522], type: "transport", city_id: 203, link: "http://google.com/maps/search/MKZ+Airport" },
+    { name: "Tanjung Bruas Port", coords: [2.2222, 102.1481], type: "port", city_id: 203, link: "http://google.com/maps/search/Tanjung+Bruas" },
+    { name: "Batang Melaka Station", coords: [2.4720, 102.4172], type: "transport", city_id: 203, link: "http://google.com/maps/search/Batang+Melaka" },
+    { name: "Melaka Sentral Bus Terminal", coords: [2.2155, 102.2407], type: "transport", city_id: 203, link: "http://google.com/maps/search/Melaka+Sentral" },
+
+    // --- 4. Krabi ---
+    // Tourism
+    { name: "Railay Beach", coords: [8.0119, 98.8374], type: "tourism", city_id: 204, link: "http://google.com/maps/search/Railay+Beach" },
+    { name: "Phi Phi Islands", coords: [7.7407, 98.7784], type: "tourism", city_id: 204, link: "http://google.com/maps/search/Phi+Phi" },
+    // Logistics
+    { name: "Krabi Airport (KBV)", coords: [8.0974, 98.9817], type: "transport", city_id: 204, link: "http://google.com/maps/search/KBV+Airport" },
+    { name: "Klong Jilad Pier", coords: [8.0464, 98.9036], type: "port", city_id: 204, link: "http://google.com/maps/search/Klong+Jilad+Pier" },
+    { name: "Trang Station (Nearest Rail)", coords: [7.5562, 99.6094], type: "transport", city_id: 204, link: "http://google.com/maps/search/Trang+Station" }, // No train in Krabi
+    { name: "Krabi Bus Terminal", coords: [8.1105, 98.8953], type: "transport", city_id: 204, link: "http://google.com/maps/search/Krabi+Bus" },
+
+    // --- 5. Phang Nga ---
+    // Tourism
+    { name: "James Bond Island", coords: [8.2746, 98.5012], type: "tourism", city_id: 205, link: "http://google.com/maps/search/James+Bond+Island" },
+    { name: "Similan Islands", coords: [8.6548, 97.6433], type: "tourism", city_id: 205, link: "http://google.com/maps/search/Similan+Islands" },
+    // Logistics
+    { name: "Phuket Airport (Nearest)", coords: [8.1116, 98.3065], type: "transport", city_id: 205, link: "http://google.com/maps/search/HKT+Airport" }, // No Airport
+    { name: "Kuraburi Pier", coords: [9.2272, 98.3842], type: "port", city_id: 205, link: "http://google.com/maps/search/Kuraburi+Pier" },
+    { name: "Phunphin Station (Nearest)", coords: [9.1052, 99.2312], type: "transport", city_id: 205, link: "http://google.com/maps/search/Phunphin+Station" }, // No Train
+    { name: "Phang Nga Bus Terminal", coords: [8.4419, 98.5283], type: "transport", city_id: 205, link: "http://google.com/maps/search/Phang+Nga+Bus" },
+
+    // --- 6. Trang ---
+    // Tourism
+    { name: "Koh Muk", coords: [7.3718, 99.2863], type: "tourism", city_id: 206, link: "http://google.com/maps/search/Koh+Muk" },
+    // Logistics
+    { name: "Trang Airport (TST)", coords: [7.5096, 99.6151], type: "transport", city_id: 206, link: "http://google.com/maps/search/TST+Airport" },
+    { name: "Kantang Port", coords: [7.4069, 99.5133], type: "port", city_id: 206, link: "http://google.com/maps/search/Kantang+Port" },
+    { name: "Trang Railway Station", coords: [7.5562, 99.6094], type: "transport", city_id: 206, link: "http://google.com/maps/search/Trang+Station" },
+    { name: "Trang Bus Terminal", coords: [7.5615, 99.6200], type: "transport", city_id: 206, link: "http://google.com/maps/search/Trang+Bus" },
+
+    // --- 7. Yala ---
+    // Tourism
+    { name: "Betong Hot Springs", coords: [5.8500, 101.0700], type: "tourism", city_id: 207, link: "http://google.com/maps/search/Betong+Hot+Spring" },
+    // Logistics
+    { name: "Betong Airport (BTZ)", coords: [5.7892, 101.1472], type: "transport", city_id: 207, link: "http://google.com/maps/search/Betong+Airport" },
+    { name: "Pattani Port (Nearest)", coords: [6.8667, 101.2500], type: "port", city_id: 207, link: "http://google.com/maps/search/Pattani+Port" }, // Landlocked
+    { name: "Yala Railway Station", coords: [6.5513, 101.2858], type: "transport", city_id: 207, link: "http://google.com/maps/search/Yala+Station" },
+    { name: "Yala Bus Terminal", coords: [6.5444, 101.2850], type: "transport", city_id: 207, link: "http://google.com/maps/search/Yala+Bus" },
+
+    // --- 8. Satun ---
+    // Tourism
+    { name: "Koh Lipe", coords: [6.4900, 99.3000], type: "tourism", city_id: 208, link: "http://google.com/maps/search/Koh+Lipe" },
+    // Logistics
+    { name: "Hat Yai Airport (Nearest)", coords: [6.9333, 100.3933], type: "transport", city_id: 208, link: "http://google.com/maps/search/HDY+Airport" }, // No Airport
+    { name: "Tammalang Pier", coords: [6.5333, 100.0667], type: "port", city_id: 208, link: "http://google.com/maps/search/Tammalang+Pier" },
+    { name: "Hat Yai Junction (Nearest)", coords: [7.0033, 100.4682], type: "transport", city_id: 208, link: "http://google.com/maps/search/Hat+Yai+Station" }, // No Train
+    { name: "Satun Bus Terminal", coords: [6.6238, 100.0674], type: "transport", city_id: 208, link: "http://google.com/maps/search/Satun+Bus" },
+
+    // =========================== EC 3 ===========================
+
+    // --- 1. Aceh ---
+    // Tourism
+    { name: "Masjid Raya Baiturrahman", coords: [5.5536, 95.3170], type: "tourism", city_id: 301, link: "http://google.com/maps/search/Masjid+Baiturrahman" },
+    { name: "Museum Tsunami Aceh", coords: [5.5480, 95.3147], type: "tourism", city_id: 301, link: "http://google.com/maps/search/Museum+Tsunami" },
+    // Logistics
+    { name: "Sultan Iskandar Muda Airport (BTJ)", coords: [5.5224, 95.4170], type: "transport", city_id: 301, link: "http://google.com/maps/search/BTJ+Airport" },
+    { name: "Pelabuhan Ulee Lheue", coords: [5.5600, 95.2800], type: "port", city_id: 301, link: "http://google.com/maps/search/Ulee+Lheue" },
+    { name: "Stasiun Bungkah (Pioneer)", coords: [5.1833, 97.0333], type: "transport", city_id: 301, link: "http://google.com/maps/search/Stasiun+Bungkah" }, // Pioneer Rail
+    { name: "Terminal Batoh", coords: [5.5400, 95.3400], type: "transport", city_id: 301, link: "http://google.com/maps/search/Terminal+Batoh" },
+
+    // --- 2. North Sumatra (EC3 Context) ---
+    // Logistics
+    { name: "Kualanamu Int. Airport (KNO)", coords: [3.6422, 98.8852], type: "transport", city_id: 302, link: "http://google.com/maps/search/KNO+Airport" },
+    { name: "Pelabuhan Kuala Tanjung", coords: [3.3600, 99.4500], type: "port", city_id: 302, link: "http://google.com/maps/search/Kuala+Tanjung" },
+    { name: "Medan Train Station", coords: [3.5931, 98.6806], type: "transport", city_id: 302, link: "http://google.com/maps/search/Medan+Station" },
+    { name: "Terminal Amplas", coords: [3.5387, 98.7185], type: "transport", city_id: 302, link: "http://google.com/maps/search/Terminal+Amplas" },
+    // Tourism
+    { name: "Lake Toba", coords: [2.6147, 98.8302], type: "tourism", city_id: 302, link: "http://google.com/maps/search/Lake+Toba" },
+
+    // --- 3. Riau ---
+    // Tourism
+    { name: "Istana Siak", coords: [0.7947, 102.0486], type: "tourism", city_id: 303, link: "http://google.com/maps/search/Istana+Siak" },
+    // Logistics
+    { name: "Sultan Syarif Kasim II Airport (PKU)", coords: [0.4608, 101.4442], type: "transport", city_id: 303, link: "http://google.com/maps/search/PKU+Airport" },
+    { name: "Pelabuhan Dumai", coords: [1.6850, 101.4460], type: "port", city_id: 303, link: "http://google.com/maps/search/Pelabuhan+Dumai" },
+    { name: "Terminal BRPS (Bus)", coords: [0.4800, 101.3900], type: "transport", city_id: 303, link: "http://google.com/maps/search/Terminal+BRPS" },
+    { name: "Terminal BRPS (Rail connection point)", coords: [0.4810, 101.3910], type: "transport", city_id: 303, link: "http://google.com/maps/search/Terminal+BRPS" }, // No Train yet
+
+    // --- 4. West Sumatra ---
+    // Tourism
+    { name: "Jam Gadang", coords: [-0.3050, 100.3692], type: "tourism", city_id: 304, link: "http://google.com/maps/search/Jam+Gadang" },
+    // Logistics
+    { name: "Minangkabau Int. Airport (PDG)", coords: [-0.7865, 100.2922], type: "transport", city_id: 304, link: "http://google.com/maps/search/PDG+Airport" },
+    { name: "Teluk Bayur Port", coords: [-0.9996, 100.3752], type: "port", city_id: 304, link: "http://google.com/maps/search/Teluk+Bayur" },
+    { name: "Stasiun Padang", coords: [-0.9420, 100.3710], type: "transport", city_id: 304, link: "http://google.com/maps/search/Stasiun+Padang" },
+    { name: "Terminal Anak Air", coords: [-0.8500, 100.3300], type: "transport", city_id: 304, link: "http://google.com/maps/search/Terminal+Anak+Air" },
+
+    // --- 5. Jambi ---
+    // Tourism
+    { name: "Candi Muaro Jambi", coords: [-1.4775, 103.6667], type: "tourism", city_id: 305, link: "http://google.com/maps/search/Muaro+Jambi" },
+    // Logistics
+    { name: "Sultan Thaha Airport (DJB)", coords: [-1.6375, 103.6425], type: "transport", city_id: 305, link: "http://google.com/maps/search/DJB+Airport" },
+    { name: "Pelabuhan Talang Duku", coords: [-1.5500, 103.7000], type: "port", city_id: 305, link: "http://google.com/maps/search/Talang+Duku" },
+    { name: "Terminal Alam Barajo", coords: [-1.6400, 103.5800], type: "transport", city_id: 305, link: "http://google.com/maps/search/Terminal+Alam+Barajo" },
+    { name: "Terminal Alam Barajo (No Train)", coords: [-1.6410, 103.5810], type: "transport", city_id: 305, link: "http://google.com/maps/search/Terminal+Alam+Barajo" },
+
+    // --- 6. South Sumatra ---
+    // Tourism
+    { name: "Ampera Bridge", coords: [-2.9917, 104.7634], type: "tourism", city_id: 306, link: "http://google.com/maps/search/Ampera+Bridge" },
+    // Logistics
+    { name: "Sultan Mahmud Badaruddin II (PLM)", coords: [-2.8983, 104.7003], type: "transport", city_id: 306, link: "http://google.com/maps/search/PLM+Airport" },
+    { name: "Boom Baru Port", coords: [-2.9750, 104.7800], type: "port", city_id: 306, link: "http://google.com/maps/search/Boom+Baru" },
+    { name: "Kertapati Railway Station", coords: [-3.0030, 104.7470], type: "transport", city_id: 306, link: "http://google.com/maps/search/Kertapati+Station" },
+    { name: "Terminal Alang-Alang Lebar", coords: [-2.9300, 104.6800], type: "transport", city_id: 306, link: "http://google.com/maps/search/Terminal+Alang+Lebar" },
+
+    // --- 7. Bengkulu ---
+    // Tourism
+    { name: "Fort Marlborough", coords: [-3.7878, 102.2536], type: "tourism", city_id: 307, link: "http://google.com/maps/search/Fort+Marlborough" },
+    // Logistics
+    { name: "Fatmawati Soekarno Airport (BKS)", coords: [-3.8625, 102.3392], type: "transport", city_id: 307, link: "http://google.com/maps/search/BKS+Airport" },
+    { name: "Pelabuhan Pulau Baai", coords: [-3.9000, 102.3000], type: "port", city_id: 307, link: "http://google.com/maps/search/Pulau+Baai" },
+    { name: "Terminal Betungan", coords: [-3.8800, 102.3500], type: "transport", city_id: 307, link: "http://google.com/maps/search/Terminal+Betungan" },
+    { name: "Lubuk Linggau Station (Nearest Rail)", coords: [-3.2950, 102.8600], type: "transport", city_id: 307, link: "http://google.com/maps/search/Lubuk+Linggau+Station" }, // Serving Bengkulu via land
+
+    // --- 8. Lampung ---
+    // Tourism
+    { name: "Way Kambas NP", coords: [-4.9333, 105.7000], type: "tourism", city_id: 308, link: "http://google.com/maps/search/Way+Kambas" },
+    // Logistics
+    { name: "Radin Inten II Airport (TKG)", coords: [-5.2417, 105.1764], type: "transport", city_id: 308, link: "http://google.com/maps/search/TKG+Airport" },
+    { name: "Pelabuhan Bakauheni", coords: [-5.8711, 105.7533], type: "port", city_id: 308, link: "http://google.com/maps/search/Bakauheni" },
+    { name: "Tanjung Karang Station", coords: [-5.4080, 105.2630], type: "transport", city_id: 308, link: "http://google.com/maps/search/Tanjung+Karang+Station" },
+    { name: "Terminal Rajabasa", coords: [-5.3600, 105.2300], type: "transport", city_id: 308, link: "http://google.com/maps/search/Terminal+Rajabasa" }
+];
