@@ -7,6 +7,7 @@
 if (typeof ec1_features === 'undefined') console.error("CRITICAL: ec1.js belum dimuat!");
 if (typeof ec2_features === 'undefined') console.error("CRITICAL: ec2.js belum dimuat!");
 if (typeof ec3_features === 'undefined') console.error("CRITICAL: ec3.js belum dimuat!");
+if (typeof ec4_features === 'undefined') console.error("CRITICAL: ec4.js belum dimuat!");
 
 // Fungsi normalisasi (Otomatis memberi ID & Warna agar tombol muncul)
 function normalizeFeatures(features, id, name, color) {
@@ -27,7 +28,8 @@ const imt_gt_data = {
   "features": [
       ...normalizeFeatures(ec1_features, 0, "EC1: Extended Songkhla-Penang-Medan", "#e9dd15"),
       ...normalizeFeatures(ec2_features, 1, "EC2: Straits of Malacca", "#00a54f"),
-      ...normalizeFeatures(ec3_features, 2, "EC3: Sumatra Corridor", "#ef59a1")
+      ...normalizeFeatures(ec3_features, 2, "EC3: Sumatra Corridor", "#ef59a1"),
+      ...normalizeFeatures(ec4_features, 3, "EC4: Southern Thailand-Northern Malaysia", "#6c8bc6")
   ]
 };
 
@@ -35,7 +37,7 @@ const imt_gt_data = {
 // Titik-titik besar (Kota/Provinsi) yang akan muncul saat tombol EC ditekan.
 const cities = [
     // === EC 1 (ID: 0) ===
-    { id: 101, name: "North Sumatra", coords: [2.8952, 98.9722], ec_id: 0 },
+    { id: 101, name: "North Sumatra", coords: [3.5952, 98.9722], ec_id: 0 },
     { id: 102, name: "Penang", coords: [5.4141, 100.3288], ec_id: 0 },
     { id: 103, name: "Kedah", coords: [6.1184, 100.3685], ec_id: 0 },
     { id: 104, name: "Perlis", coords: [6.4414, 100.1986], ec_id: 0 },
@@ -63,7 +65,13 @@ const cities = [
     { id: 305, name: "Jambi", coords: [-1.6099, 103.6131], ec_id: 2 },
     { id: 306, name: "South Sumatra", coords: [-2.9761, 104.7754], ec_id: 2 },
     { id: 307, name: "Bengkulu", coords: [-3.8004, 102.2655], ec_id: 2 },
-    { id: 308, name: "Lampung", coords: [-5.3971, 105.2668], ec_id: 2 }
+    { id: 308, name: "Lampung", coords: [-5.3971, 105.2668], ec_id: 2 },
+
+    // === EC 4 (ID: 3) ===
+    { id: 401, name: "Johor", coords: [1.4927, 103.7414], ec_id: 3 }, // New for EC4
+    { id: 402, name: "Riau (EC4)", coords: [0.5071, 101.4478], ec_id: 3 }, // Inherited
+    { id: 403, name: "West Sumatra (EC4)", coords: [-0.9492, 100.4172], ec_id: 3 }, // Inherited
+    { id: 404, name: "Malacca (EC4)", coords: [2.1896, 102.2501], ec_id: 3 } // Inherited   
 ];
 
 // --- 3. LANDMARKS (FULL DATA) ---
@@ -504,5 +512,76 @@ const landmarks = [
     { name: "Radin Inten II Airport (TKG)", coords: [-5.2417, 105.1764], type: "transport", city_id: 308, link: "http://google.com/maps/search/TKG+Airport" },
     { name: "Pelabuhan Bakauheni", coords: [-5.8711, 105.7533], type: "port", city_id: 308, link: "http://google.com/maps/search/Bakauheni" },
     { name: "Tanjung Karang Station", coords: [-5.4080, 105.2630], type: "transport", city_id: 308, link: "http://google.com/maps/search/Tanjung+Karang+Station" },
-    { name: "Terminal Rajabasa", coords: [-5.3600, 105.2300], type: "transport", city_id: 308, link: "http://google.com/maps/search/Terminal+Rajabasa" }
+    { name: "Terminal Rajabasa", coords: [-5.3600, 105.2300], type: "transport", city_id: 308, link: "http://google.com/maps/search/Terminal+Rajabasa" },
+
+    // 1. Johor (ID: 401)
+    { name: "Legoland Malaysia", coords: [1.4273, 103.6296], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+Sky+Bridge+Kedah6" },
+    { name: "Johor Bahru City Square", coords: [1.4623, 103.7642], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+Sky+Bridge+Kedah7" },
+    { name: "Sultan Abu Bakar State Mosque", coords: [1.4572, 103.7562], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+Sky+Bridge+Kedah8" },
+    { name: "Danga Bay", coords: [1.4727, 103.7236], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+Sky+Bridge+Kedah9" },
+    { name: "Istana Besar (Grand Palace)", coords: [1.4551, 103.7566], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+SkyCab+Kedah0" },
+    { name: "Desaru Beach", coords: [1.5644, 104.2632], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+SkyCab+Kedah1" },
+    { name: "Desaru Coast Adventure Waterpark", coords: [1.5701, 104.2592], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+SkyCab+Kedah2" },
+    { name: "Endau-Rompin National Park", coords: [2.4644, 103.2989], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+SkyCab+Kedah3" },
+    { name: "Mount Ophir (Gunung Ledang)", coords: [2.3732, 102.6072], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+SkyCab+Kedah4" },
+    { name: "Kukup Island National Park", coords: [1.3250, 103.4474], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+SkyCab+Kedah5" },
+    { name: "Pulau Rawa", coords: [2.5186, 103.9763], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+SkyCab+Kedah6" },
+    { name: "Pulau Tioman (Johor side access)", coords: [2.7902, 104.1613], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+SkyCab+Kedah7" },
+    { name: "KSL City Mall", coords: [1.4866, 103.7631], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+SkyCab+Kedah8" },
+    { name: "Johor Zoo", coords: [1.4579, 103.7547], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Langkawi+SkyCab+Kedah9" },
+    { name: "Tanjung Piai National Park", coords: [1.2673, 103.5164], type: "tourism", city_id: 401, link: "https://www.google.com/maps/search/Telaga+Tujuh+Waterfall+Kedah0" },
+    // Logistics
+    { name: "Senai International Airport (JHB)", coords: [1.6413, 103.6696], type: "transport", city_id: 401, link: "https://www.google.com/maps/search/Telaga+Tujuh+Waterfall+Kedah4" },
+    { name: "Port of Tanjung Pelepas (PTP)", coords: [1.3626, 103.5436], type: "port", city_id: 401, link: "https://www.google.com/maps/search/Telaga+Tujuh+Waterfall+Kedah5" },
+    { name: "Johor Port (Pasir Gudang)", coords: [1.4326, 103.9110], type: "port", city_id: 401, link: "https://www.google.com/maps/search/Telaga+Tujuh+Waterfall+Kedah6" },
+    { name: "JB Sentral Railway Station", coords: [1.4633, 103.7633], type: "transport", city_id: 401, link: "https://www.google.com/maps/search/Telaga+Tujuh+Waterfall+Kedah7" },
+    { name: "Larkin Sentral Bus Terminal", coords: [1.4969, 103.7408], type: "transport", city_id: 401, link: "https://www.google.com/maps/search/Telaga+Tujuh+Waterfall+Kedah8" },
+    { name: "Puteri Harbour Ferry Terminal", coords: [1.4172, 103.6587], type: "port", city_id: 401, link: "https://www.google.com/maps/search/Telaga+Tujuh+Waterfall+Kedah9" },
+
+    // 2. Riau (Inherited for EC4 - ID: 402)
+    { name: "Siak Sri Indrapura Palace", coords: [0.7946, 102.0463], type: "tourism", city_id: 402, link: "https://www.google.com/maps/search/Istana+Siak+Sri+Indrapura+Riau" },
+    { name: "Muara Takus Temple", coords: [0.3361, 100.6406], type: "tourism", city_id: 402, link: "https://www.google.com/maps/search/Candi+Muara+Takus+Riau" },
+    { name: "Bono Wave", coords: [0.2641, 102.5833], type: "tourism", city_id: 402, link: "https://www.google.com/maps/search/Telaga+Tujuh+Waterfall+Kedah1" },
+    { name: "Tesso Nilo National Park", coords: [-0.0989, 101.6231], type: "tourism", city_id: 402, link: "https://www.google.com/maps/search/Tesso+Nilo+National+Park+Riau" },
+    { name: "Pekanbaru Great Mosque", coords: [0.5372, 101.4468], type: "tourism", city_id: 402, link: "https://www.google.com/maps/search/Pekanbaru+Great+Mosque+Riau" },
+    { name: "An-Nur Grand Mosque", coords: [0.5283, 101.4485], type: "tourism", city_id: 402, link: "https://www.google.com/maps/search/Telaga+Tujuh+Waterfall+Kedah2" },
+    { name: "Alam Mayang Park", coords: [0.5050, 101.4925], type: "tourism", city_id: 402, link: "https://www.google.com/maps/search/Alam+Mayang+Recreational+Park+Riau" },
+    // Logistics
+    { name: "Sultan Syarif Kasim II Airport (PKU)", coords: [0.4608, 101.4442], type: "transport", city_id: 402, link: "http://google.com/maps/search/PKU+Airport" },
+    { name: "Port of Dumai", coords: [1.6850, 101.4460], type: "port", city_id: 402, link: "http://google.com/maps/search/Pelabuhan+Dumai" },
+    { name: "Terminal BRPS", coords: [0.4800, 101.3900], type: "transport", city_id: 402, link: "http://google.com/maps/search/Terminal+BRPS" },
+
+    // 3. West Sumatra (Inherited for EC4 - ID: 403)
+    { name: "Jam Gadang", coords: [-0.3052, 100.3692], type: "tourism", city_id: 403, link: "https://www.google.com/maps/search/Jam+Gadang+West+Sumatra" },
+    { name: "Lake Maninjau", coords: [-0.3086, 100.1830], type: "tourism", city_id: 403, link: "https://www.google.com/maps/search/Lake+Maninjau+West+Sumatra" },
+    { name: "Lake Singkarak", coords: [-0.6075, 100.5562], type: "tourism", city_id: 403, link: "https://www.google.com/maps/search/Lake+Singkarak+West+Sumatra" },
+    { name: "Harau Valley", coords: [-0.1042, 100.6653], type: "tourism", city_id: 403, link: "https://www.google.com/maps/search/Harau+Valley+West+Sumatra" },
+    { name: "Sianok Canyon", coords: [-0.3083, 100.3644], type: "tourism", city_id: 403, link: "https://www.google.com/maps/search/Sianok+Canyon+West+Sumatra" },
+    { name: "Pagaruyung Palace", coords: [-0.4711, 100.6214], type: "tourism", city_id: 403, link: "https://www.google.com/maps/search/Istano+Basa+Pagaruyung+West+Sumatra" },
+    { name: "Air Manis Beach", coords: [-0.9850, 100.3540], type: "tourism", city_id: 403, link: "https://www.google.com/maps/search/Air+Manis+Beach+West+Sumatra" },
+    { name: "Mentawai Islands", coords: [-1.4000, 99.0000], type: "tourism", city_id: 403, link: "https://www.google.com/maps/search/Mentawai+Islands+West+Sumatra" },
+    { name: "Kelok 9", coords: [-0.0714, 100.6975], type: "tourism", city_id: 403, link: "https://www.google.com/maps/search/Kelok+9+West+Sumatra" },
+    { name: "Padang Old Town", coords: [-0.9500, 100.3600], type: "tourism", city_id: 403, link: "https://www.google.com/maps/search/Padang+Old+Town+West+Sumatra" },
+    
+    // Logistics
+    { name: "Minangkabau Int. Airport (PDG)", coords: [-0.7865, 100.2922], type: "transport", city_id: 403, link: "http://google.com/maps/search/PDG+Airport" },
+    { name: "Teluk Bayur Port", coords: [-0.9996, 100.3752], type: "port", city_id: 403, link: "http://google.com/maps/search/Teluk+Bayur" },
+    { name: "Padang Railway Station", coords: [-0.9420, 100.3710], type: "transport", city_id: 403, link: "http://google.com/maps/search/Stasiun+Padang" },
+
+    // 4. Malacca (Inherited for EC4 - ID: 404)
+    { name: "Jonker Street", coords: [2.1957, 102.2476], type: "tourism", city_id: 404, link: "https://www.google.com/maps/search/Jonker+Street+Malacca" },
+    { name: "A Famosa Fortress", coords: [2.1923, 102.2494], type: "tourism", city_id: 404, link: "https://www.google.com/maps/search/A+Famosa+and+Stadthuys+Malacca" },
+    { name: "Stadthuys", coords: [2.1939, 102.2486], type: "tourism", city_id: 404, link: "https://www.google.com/maps/search/A+Famosa+and+Stadthuys+Malacca" },
+    { name: "Christ Church Melaka", coords: [2.1940, 102.2490], type: "tourism", city_id: 404, link: "https://www.google.com/maps/search/Christ+Church+Melaka+Malacca" },
+    { name: "Melaka River Cruise", coords: [2.1944, 102.2481], type: "tourism", city_id: 404, link: "https://www.google.com/maps/search/Melaka+River+Cruise+Malacca" },
+    { name: "St. Paul’s Hill", coords: [2.1927, 102.2493], type: "tourism", city_id: 404, link: "https://www.google.com/maps/search/Telaga+Tujuh+Waterfall+Kedah3" },
+    { name: "Melaka Sultanate Palace Museum", coords: [2.1955, 102.2489], type: "tourism", city_id: 404, link: "https://www.google.com/maps/search/Melaka+Sultanate+Palace+Museum+Malacca" },
+    { name: "Portuguese Settlement", coords: [2.1764, 102.2803], type: "tourism", city_id: 404, link: "https://www.google.com/maps/search/Portuguese+Settlement+Malacca" },
+    { name: "Melaka Zoo", coords: [2.2580, 102.2530], type: "tourism", city_id: 404, link: "https://www.google.com/maps/search/Melaka+Zoo+Malacca" },
+    { name: "Taming Sari Tower", coords: [2.1961, 102.2479], type: "tourism", city_id: 404, link: "https://www.google.com/maps/search/Taming+Sari+Tower+Malacca" },
+    // Logistics
+    { name: "Malacca Int. Airport (MKZ)", coords: [2.2634, 102.2522], type: "transport", city_id: 404, link: "http://google.com/maps/search/MKZ+Airport" },
+    { name: "Tanjung Bruas Port", coords: [2.2222, 102.1481], type: "port", city_id: 404, link: "http://google.com/maps/search/Tanjung+Bruas" },
+    { name: "Melaka Sentral Bus Terminal", coords: [2.2155, 102.2407], type: "transport", city_id: 404, link: "http://google.com/maps/search/Melaka+Sentral" }
+
 ];
